@@ -1,0 +1,56 @@
+{% extends '../basic.html' %}
+{% load static %}
+
+{% block content %}
+{% for post in electricPosts %}
+<a href="posts/{{ post.category }}/{{ post.idVal }}" style="color:black;">
+    <div id="" class="row jumbotron">
+
+        <!--title container-->
+        <div class="container-fluid">
+
+            <!--title-->
+            <h3>{{ post.title }}</h3>
+
+            <!--meta information-->
+            <div class="row text-black-50">
+                <div class="col-sm-3">
+                    <h6>
+                        <small>{{ post.date }}</small>
+                    </h6>
+                </div>
+                <div class="col-sm-3">
+                    <h6>
+                        <small>Category: {{ post.category }}</small>
+                    </h6>
+                </div>
+            </div>
+
+        </div>
+
+        <!--content container-->
+        <div class="container-fluid row">
+
+            <!--text content-->
+            <div class="col-sm-8">
+                <p>
+                    {{ post.introContent }}
+                </p>
+            </div>
+
+            <!--thumbnail content-->
+            <div class="col-sm-4">
+
+                <img src="{% static 'images' %}/{{ post.pictureID }}" class="img-thumbnail mx-auto d-block float-right" alt="recentimamge1">
+            </div>
+        </div>
+        <div class="container-fluid row" style="padding:30px; padding-bottom:0px;">
+            <button type="button" class="btn btn-primary">Read More</button>
+
+        </div>
+    </div>
+</a>
+{% endfor %}
+
+
+{% endblock %}

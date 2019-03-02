@@ -1,0 +1,180 @@
+{% extends 'basic.html' %}
+{% load static %}
+
+{% block head %}
+<div class="text-center bg-img">
+
+    <!--not a container div because bg-img in css takes care of padding-->
+    <div>
+        <h1 class="text-black titlewords fullTitle">
+            <a href="#aboutme">Theo Lincke</a>
+        </h1>
+        <h6 class="text-black titlewords subtitle font-italic">
+            <a href="#blogposts">Embedded Systems, Mathematics and Coding</a>
+        </h6>
+
+    </div>
+</div>
+
+{% endblock head %}
+
+{% block content %}
+<div class = "container text-center text-white" style="padding:50px;">
+    <div style="background-color:black; border-radius:20px;padding:20px;">
+    <h5>Notice: I am currently completely revamping my website, if you happen to find a bug anywhere (a wrong page, a bug in some code, etc) it would be really great if you sent me a quick email via my <a href="{% url 'contact' %}">contact</a> page. This is only temporary </h5>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="container">
+        <div class="row medium" style="padding-bottom:0px;">
+
+            {% for post in recent1 %}
+
+            <!--recent-->
+            <div class="col-md-3 medium container begin_topics right_left_special_topic">
+                <a href="#recentpost1">
+                    <div class="jumbotron" style="padding:10px;background-color:white;">
+                        <div class="text-white">
+
+                            <h5 class="rcornersb text-center">Recent</h5>
+
+                        </div>
+                    </div>
+                </a>
+                <div class="container">
+                    <h5 class="text-left text-center">{{ post.title }}</h5>
+
+                    <img src="{% static 'images/' %}/{{ post.pictureID }}" class="img-thumbnail mx-auto d-block" alt="recentimamge1">
+                    <div class="container text-center blurb">
+                        <p>{{ post.subtitle }}</p>
+                    </div>
+                </div>
+                <div class="row medium" style="padding-top:0px;">
+                    <div class="col-sm-12">
+                        <div class="buttoncontainer smallcont">
+                            <a class="buttoncontainer" href="{% url 'posts' %}{{post.category}}/{{post.idVal}}">
+                                <button href="#" class="btn btn-success" type="button">Check Out the Project</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% for post in featured %}
+            <div class="col-md-6 begin_topics">
+                <a href="#featuredpost">
+                    <div class="jumbotron" style="padding:10px;background-color:white;">
+                        <div class="text-white text-center">
+
+                            <h2 class="rcornersa text-center">Featured</h2>
+
+                        </div>
+                    </div>
+                </a>
+                <div class="container">
+                    <h5 class="text-left text-center">
+                        {{ post.title }}
+                    </h5>
+
+                    <img src="{% static 'images/' %}/{{ post.pictureID }}" class="img-thumbnail mx-auto d-block" alt="featuredimage">
+                    <div class="container text-center blurb">
+                        <p>{{ post.subtitle }}</p>
+                    </div>
+                </div>
+                <div class="row medium" style="padding-top:0px;">
+                    <div class="col-sm-12">
+                        <div class="buttoncontainer smallcont">
+                            <a class="buttoncontainer " href="{% url 'posts' %}{{post.category}}/{{post.idVal}}">
+                                <button href="#" class="btn btn-success" type="button">Check Out the Project</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% for post in recent2 %}
+
+            <!--recent-->
+            <div class="col-md-3 medium container begin_topics right_left_special_topic">
+                <a href="#recentpost1">
+                    <div class="jumbotron" style="padding:10px;background-color:white;">
+                        <div class="text-white">
+
+                            <h5 class="rcornersb text-center">Recent</h5>
+
+                        </div>
+                    </div>
+                </a>
+                <div class="container">
+
+                    <h5 class="text-left text-center">{{ post.title }}</h5>
+
+                    <img src="{% static 'images/' %}/{{ post.pictureID }}" class="img-thumbnail mx-auto d-block" alt="recentimamge1">
+                    <div class="container text-center blurb">
+                        <p>{{ post.subtitle }}</p>
+                    </div>
+                </div>
+                <div class="row medium" style="padding-top:0px;">
+                    <div class="col-sm-12">
+                        <div class="buttoncontainer smallcont">
+                            <a class="buttoncontainer" href="{% url 'posts' %}{{post.category}}/{{post.idVal}}">
+                                <button href="#" class="btn btn-success" type="button">Check Out the Project</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+        </div>
+        <a href="{% url 'projects' %}">
+            <div class="medium" style="padding-top:0px;">
+                <div class="text-white text-center">
+
+                    <h2 class="rcorners text-center">Projects</h2>
+
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+<!--About Theo-->
+
+<div class="aboutme" id="aboutme">
+    <div class="text-white large container">
+
+        <div class="container-fluid large ">
+
+            <div class="row">
+
+                <!--image-->
+                <div class="col-sm-5">
+                    <div class="container">
+                        <img src="{% static 'images/myface.jpg' %}" class="rounded-circle mx-auto d-block" alt="myimage">
+                    </div>
+                </div>
+
+                <!--about me-->
+                <div class="col-sm-7">
+                    <p>
+                        Thanks for visiting my website! My name is Theo Lincke. I’m a beginning computer scientist at the University of Colorado at Boulder with an electrical engineering and applied math minor. I have experience in mostly
+                        Java and Python, however, I am trying to pick up new languages all the time. To do this, I've created this website to showcase some of my short term and long term projects. Over the past few years, I've been tinkering
+                        with "hobby code", or small projects that allow me to see mathematics in a different light or build a very simple application. Although currently, I don't know enough about computer science to build publishable and
+                        high quality programs, it is my hope that working on these projects on the side will really help me get a better idea of how I can integrate creative solutions with my programs. Please enjoy reading over my projects
+                        and if you would like more information, please visit my
+                        <a class="text-white" href="{% url 'about' %}">
+                            about
+                        </a>
+                        page, located on the navbar.
+
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- end of blog section-->
+{% endblock content %}

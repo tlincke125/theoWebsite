@@ -1,0 +1,211 @@
+{% extends '../../basic.html' %}
+{% load static %}
+
+{% block content %}
+
+<div>
+        <div class="container">
+            <div class="text-center" style="padding-top:150px;">
+                <!--not a container div because bg-img in css takes care of padding-->
+                <div class="container">
+                    <h1 class="text-blackwhitebckng"><a href="#blogcontent">Hacking into a Roomba</a></h1>
+                </div>
+            </div>
+            <div class="container medium">
+                <img src="{% static 'images/electronics/robot.png' %}" style="width:50%;" class="img-fluid rounded mx-auto d-block" />
+            </div>
+
+            <div class="text-center container">
+                <h5 class="font-italic">Re-automating an Previously Autonomous Robot</h5>
+            </div>
+        </div>
+    </div>
+
+    <!--content-->
+    <div class="blogcontent" id="blogcontent">
+        <div class="large" style="padding-bottom:0px;">
+            <div class="text-white medium" style="background-color:#313131;">
+                <div class="container medium">
+                    <div class="title smallcont container text-right">
+                        <img src="{% static 'images/electronics/phasecuteamimage.jpg' %}" class=" float-left container" style="width:300px; " />
+
+                        <h1>Our Team</h1>
+
+                    </div>
+                    <div class="text-left container">
+
+                        <p>
+                            For this project, I worked with a group of three other engineers, Vikram Tholakapalli, Adam
+                            Chehadi and Sam Williams.
+                            Our project involved the construction of a semi autonomous robot that would
+                            follow its user around. The inspiration for this project was primarily implementation of
+                            user following luggage, shopping
+                            carts, or even cars. It could be targeted towards the elderly and those who have trouble
+                            pushing carts and luggage by
+                            themselves, or any general consumer.
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="text-white medium" style="background-color:#808080;">
+                <div class="container medium">
+                    <div class="title smallcont text-right">
+                        <h1>Breaking into the Robot</h1>
+                    </div>
+                    <hr style="border-color:white;">
+                    <div class="text-left">
+                        <p>
+                            IRobot Create has a lot of open source information on their robots. This is mainly to
+                            encourage people to interface with them
+                            and program them to do different things. Thus, we didn't have much trouble finding
+                            documentation on the necessary serial codes.
+                            The roomba we used ran on a series of OPT codes transmitted via serial bus. For example, we
+                            could send a signal to request sensor
+                            information, request the robot to translate linearly or angularly, or to merely power on or
+                            off the machine.
+                        </p>
+                        <div class="container">
+                            <img src="{% static 'images/electronics/jumperwires.jpg' %}" class="float-right container" style="width:300px;border-radius:20px;padding-top:10px;padding-bottom:0px;" />
+                        </div>
+                        <p>
+                            The difficulty in this project was the lack of resources that IRobot normally provides to
+                            actually program the bot. Normally, when
+                            somebody tries to program the bot, they can do so using a 7 pin DIN to USB converter. We
+                            did not have this, so we had to
+                            manually code programs that contained drive functions, data request functions and other
+                            functions that relied solely on
+                            binary data. The libraries that already existed worked assuming we had this converter.
+                            Thus, to control the bot, we shoved
+                            a few jumper wires into the holes of the 7 pin DIN connector.
+                        </p>
+
+                        <div class="container">
+                            <p>
+                                The project moved slow at first, after seven hours we were discussing plans for a new
+                                project from scratch.
+                                However, at the last moment, the robot began to work. Even though the robot only moved
+                                forward, waited one second, then moved back, we were at the perfect stage to move on
+                                with the project and implementing
+                                the code from Open CV.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="medium" style="background-color:white;">
+                <div class="container medium">
+                    <div class="title smallcont text-right">
+                        <h1>The Code</h1>
+                    </div>
+                    <hr style="border-color:black;">
+                    <div class="text-left">
+                        <img src="{% static 'images/electronics/gif4.gif' %}" class="container float-left" style="width:200px;" />
+
+                        <p>
+                            Our code was mostly done by Sam Williams. He used Opencv to recognize a shape in space and
+                            detect the size of
+                            the edge no matter what orientation the shape was in. The image detection code (roombacv.py
+                            if you’re following
+                            along with the github code) returned three values:
+                        </p>
+                        <div class="container smallcont ul-nopaddingsmallscreen">
+                            <ul>
+                                <li>Accuracy of the data</li>
+                                <li>Distance (in pixels) the box was from the center of the frame</li>
+                                <li>The height (in pixels) of the right edge of the box no matter what orientation it
+                                    was in</li>
+                            </ul>
+                        </div>
+
+                        <p>
+                            Given these three pieces of data, Vikram, Adam and I worked on a very crude model for the
+                            control system (finaltracker.py).
+                            It ran in a main control loop, while constantly testing whether the data was accurate, then
+                            it measured
+                            the size of the right edge and the distance from the center. The sequence of steps went
+                            like this (this
+                            is not pseudo code and should not be treated as such. Nor should it be treated as an
+                            algorithm):
+                        </p>
+                        <img src="{% static 'images/electronics/gif1.gif' %}" class="container float-right" style="width:200px;" />
+
+                        <ol>
+                            <li>Is the data accurate? If not, skip the following and loop back around</li>
+                            <li>is the x position greater than a certain bound? (where xpos is the position of the box
+                                on the camera screen in the x axis)</li>
+                            <li>If so, turn left if the x position is to the left and right if it is to the right.</li>
+                            <li>If the size of the right edge is large, the robot is close, so stop moving.</li>
+                            <li>If the size of the right edge is small, the robot is far so move faster (500 mm/s)</li>
+                            <li>Otherwise, the velocity is at a steady 200 mm/s</li>
+                            <li>Make the bot drive straight at the specified velocity</li>
+                            <li>Repeat</li>
+                        </ol>
+                        <img src="{% static 'images/electronics/gif2.gif' %}" class="container float-left" style="width:200px;" />
+                        <p>
+                            Keep in mind that this was very crude code. None of it was commented out, organized into
+                            separate control
+                            loops or separated by category. This was because we had only 4 hours to get everything
+                            together and
+                            working and a lot of this was spent tweaking the image detection algorithm.
+                        </p>
+                        <p>
+                            You'll also see that the robot is run using a laptop. This was because the hackathon did
+                            not offer microprocessors that we could
+                            easily use like raspberry pies. There were development boards such as some microprocessors
+                            from Xilinx, however, we were working
+                            under a time limit and it wasn't worth learning how to work these boards.
+                        </p>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="text-white" style="background-color:#313131;">
+                <div class="container medium">
+                    <div class="title smallcont container text-right">
+                        <h1>Future Versions</h1>
+                    </div>
+                    <hr style="border-color:white;">
+                    <img src="{% static 'images/electronics/gif3.gif' %}" class="container float-left" style="width:200px;" />
+
+                    <div class="text-left medium container">
+
+                        <p>
+                            There is so much more to work on with this robot. Firstly, if the robot were to be used to
+                            follow its
+                            user in stores or airports, it would need a collision detection algorithm. It will also
+                            need to transition
+                            more smoothly. In some of the GIFs, you may notice it stutters at certain points. The way
+                            our code worked, the
+                            robot would speed up or slow down based on whether it was in a certain range. Thus, the
+                            barrier between two ranges
+                            would cause the robot to get confused and speed up and slow down at a very rapid pace. We
+                            can fix this by implimenting an
+                            acceleration protocol. So if the robot is in a certain range, its speed will increment with
+                            every loop by a small number like
+                            4 or 5 mm/s until it reaches a maximum value and then it will have a constant velocity. To
+                            fix a lot of these issues, it will be
+                            beneficial to move to a more robust operating system like ROS (robotic operating system) to
+                            control nodes, events and
+                            topics. We plan to work these bugs out during the next hackathon in December.
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="container medium">
+
+                <a class="buttoncontainer" href="https://github.com/tlincke125/AutonomousLuggageSystem-2018-Phase-Hack-CU.git">
+                    <button href="#" class="btn btn-info" type="button" style="font-size:40px;padding:30px;">GitHub
+                        Code</button>
+                </a>
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+{% endblock %}

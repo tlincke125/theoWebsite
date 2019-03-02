@@ -1,0 +1,201 @@
+{% extends '../../basic.html' %}
+{% load static %}
+
+{% block content %}
+<div class="projectbckng large" style="background-image:url({% static 'images/programming/database.jpg' %});">
+        <div class="container" style="padding-top:80px;">
+            <div class="text-center">
+
+                <div class="container">
+
+
+
+                    <!--this is the title-->
+                    <h1 class="text-title "><a href="#content">Building this Website</a></h1>
+                </div>
+            </div>
+
+
+            <div class="text-center text-white container">
+
+                <!--This is the subtitle-->
+                <h5 class="font-italic">What it takes to build a website from scratch</h5>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="content" class="blogcontent">
+        <!--intro-->
+        <div class="text-white large" style="background:#383838;">
+            <div class="container smallcont">
+                <div class="title smallcont text-right">
+                    <h1>Inspiration</h1>
+                </div>
+                <hr style="border-color:white;">
+                <div class="content">
+                    <p>
+                        I was inspired to create this website from Devon Crawford and Maureen Lincke, you can find
+                        their websites
+                        in the <a class="text-white" href="{% url 'about' %}">about</a> tab on the navbar. I have always
+                        been interested in back-end programming,
+                        working on algorithms and deeper software; however, I've never been able to apply this more
+                        conceptual computer
+                        science content to a user friendly experience. Thus, I've created this website to begin to
+                        delve into user interaction
+                        and interfaces.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!--body-->
+        <div class="medium text-white" style="background:#808080">
+            <div class="smallcont container">
+                <div class="title smallcont">
+                    <h1>The Website</h1>
+                </div>
+                <hr style="border-color:white;">
+                <div class="content">
+                    <p>
+                        Unlike most of my projects, I won't go into as much detail on the face value aspects of my
+                        website because they're
+                        mostly self explanatory. To build this site, I didn't really rely on any popular frameworks
+                        like react or angular,
+                        instead, I mostly hard coded the html, css and javascript. This was mainly to familiarize
+                        myself with the basic
+                        scripting languages. For my next projects (I will be building a few people some websites to
+                        showcase their artwork,
+                        when those are up I'll write a new post) I will be learning how to use React JS to speed up the
+                        process significantly.
+                        I also have a lot of projects planned to showcase some backend programming including an
+                        authentication service that collects data on users to display the most relevant information. I
+                        will also be working on a search
+                        algorithm that I will be implementing on the site. Generally, this is mostly a blog, so it
+                        doesn't have that much in terms
+                        of backend.
+                    </p>
+                    <div class="container smallcont">
+                        <div class="smallcont text-right">
+                            <img src="{% static 'images/programming/p5js.jpg' %}" class="float-left" style="width:30%;padding:10px;border-radius:20px;" />
+                            <h4>Javascript</h4>
+
+                        </div>
+                        <div class="content">
+
+                            <p>
+                                I came into building this website with no experience in javascript at all. However,
+                                javascript is a relatively simple
+                                front end language to learn quickly. The javascript on my site is used to store
+                                comments and contact information whenever
+                                you submit a comment or a query on the contact page. It then sorts through the comment
+                                data and displays only the relevant
+                                comments for each post. Right now, the main page has a list of ongoing posts. I will be
+                                working on a way to display popular
+                                posts based on the number of hits and the release date etc.
+                            </p>
+                        </div>
+                        <div>
+                            <p>
+                                I will have to work on some way to embed code on each page itself. Some of my pages
+                                will have live demonstrations (check out
+                                my math post <a class="text-white text-dark" href="/posts/math/1/">here</a>
+                                on attractors and you'll see what I mean). I can use
+                                Django to work in python, but this won't allow me to easily upload my java files or C.
+                                I have also looked into code compilers
+                                that compile one code into another such as PyJs. Generally, though I have been working
+                                in the IDE processing and using the
+                                P5.js library to create live graphics of my code.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="container smallcont">
+                        <div class="smallcont">
+                            <img src="{% static 'images/programming/visstudiocode.jpg' %}" class="float-right" style="width:50%;padding:30px;border-radius:40px;" />
+                            <h4>HTML and CSS</h4>
+                        </div>
+                        <div class="content">
+
+                            <p>
+                                HTML and CSS aren't really programming languages because they're static. They can't
+                                work with data or dynamic processes like
+                                other languages can. However, getting into these two scripting languages has helped me
+                                better understand the connection
+                                between dynamic and static languages. I found that learning these languages really
+                                bridged the gap between complex computer
+                                algorithms and how we can implement back end programming into the front end. Learning
+                                how to work with DOM (document object manipulation)
+                                and how languages like javascript can pull elements from static scripts really helped
+                                me in programming.
+                            </p>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="container smallcont">
+                    <div class="smallcont">
+                        <h4>PHP and SQL</h4>
+                    </div>
+
+                    <div class="content">
+                        <p>
+                            I was originally going to store my data in mySQL using SQL and PHP. However, I didn't have
+                            a strong grasp of PHP (and furthermore SQL
+                            because the two are very closely linked). Generally, it seems like these two languages are
+                            better suited for when you're storing
+                            data on your own server. Otherwise, by using cloud based databases like firebase, you don't
+                            really need to have a database manager
+                            like mySQL. I might work with these two languages in the future, but for now, I'll be
+                            focusing on other projects.
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="medium text-white blogcontent" style="background:#383838">
+        <div class="container smallcont">
+            <div class="title smallcont">
+                <h1>Data Storage</h1>
+
+            </div>
+            <img src="{% static 'images/programming/firebaselogo.png' %}" class="img-rounded img-responsive float-right" style="width:200px;padding:30px;border-radius:40px;" />
+
+            <hr style="border-color:white;">
+            <div class="content">
+                <p>
+                    For this website, I didn't use a local database, I used a cloud based database called Firebase.
+                    Firebase allows you to store
+                    data very easily on the cloud and manage the data very easily. It also has a variety of functions
+                    you can use in your javascript
+                    and it is a very easy interface for creating interactive and responsive websites. Definitely check
+                    it out.
+                </p>
+            </div>
+        </div>
+        <div class="container smallcont">
+            <div class="title smallcont">
+                <h1>Future</h1>
+            </div>
+            <hr style="border-color:white;">
+            <div class="content">
+                <p>
+                    I hope to continue working on this website and migrate it over to another site once I've become
+                    more proficient at web development.
+                    Now, however, I'll be putting most of my focus on other projects that I will be featuring on the
+                    site. The whole reason I built this
+                    was to introduce myself to web development and I think taking a formal course would be very
+                    benificial before I go on building more
+                    websites for the public domain. I hope you enjoy my site and reading about my projects!
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="container medium" style="padding-bottom:0px;">
+
+        <a class="buttoncontainer" href="https://github.com/tlincke125/websiteTheo">
+            <button href="#" class="btn btn-info" type="button" style="font-size:40px;padding:30px;">GitHub Code</button>
+        </a>
+    </div>
+{% endblock content %}

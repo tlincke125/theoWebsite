@@ -1,0 +1,33 @@
+{% extends 'basic.html' %}
+{% load static %}
+
+{% block head %}
+{% endblock head %}
+
+{% block content %}
+<a href="Projects/electronics.html">
+    <div class="projectlabel">
+        <img src="{% static 'images/electronics/circuitboard.jpg' %}" alt="Avatar" class="imagelabel image">
+        <div class="overlaylabel overlay">
+            <div class="textlabel container text">Electronics Projects</div>
+        </div>
+    </div>
+</a>
+<a href="Projects/mathematics.html">
+    <div class="projectlabel">
+        <img src="{% static 'images/mathematics/fractalgeneral.jpg' %}" alt="Avatar" class="imagelabel image">
+        <div class="overlaylabel overlay" style="">
+            <div class="textlabel container text">Mathematics Projects</div>
+        </div>
+    </div>
+</a>
+<a href="Projects/programming.html">
+    <div class="projectlabel">
+        <img src="{% static 'images/programming/database.jpg' %}" alt="Avatar" class="imagelabel image">
+        <div class="overlaylabel overlay">
+            <div class="textlabel container text">Programming Projects</div>
+        </div>
+    </div>
+</a>
+
+{% endblock content %}

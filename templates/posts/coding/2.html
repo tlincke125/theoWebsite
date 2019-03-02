@@ -1,0 +1,158 @@
+{% extends '../../basic.html' %}
+{% load static %}
+{% block content %}
+    <div class="projectbckng large" style="background-color:#585859;">
+      <div class="container" style="padding-top:80px;">
+        <div class="text-center">
+
+          <div class="container">
+
+            <!--this is the title-->
+            <h1 class="text-title ">
+              <a href="#content">An N x N Dimensional Rubik's Cube Solver</a>
+            </h1>
+          </div>
+        </div>
+
+        <div class="text-center text-white container">
+          <img src="{% static 'images/programming/cube30x30.png' %}" style="width:300px;">
+          <!--This is the subtitle-->
+          <h5 class="font-italic">Solving a 100 x 100 Rubik's Cube</h5>
+        </div>
+      </div>
+
+    </div>
+    <!-- <img src="../../images/programming/internet.jpg" style="width:100%;" /> -->
+    <!--content-->
+    <!-------------------------------------------------------------------------------------------------------------------------------------------------->
+    <div id="content" class="blogcontent">
+      <!--intro-->
+      <div class="text-white large" style="background:#383838;">
+        <div class="container medium" style="padding-bottom:0px;">
+          <a class="buttoncontainer" href="/posts/coding/rubiksCube/cube/">
+            <button href="#" class="btn btn-success" type="button" style="font-size:40px;padding:30px;">Check Out the WebApp</button>
+          </a>
+        </div>
+        <div class="container">
+          <p>A quick note, I talk about this in detail later, but the webapp is not my project. Read below about how I managed the logic to actually solve the cube.</p>
+        </div>
+        <div class="container smallcont">
+          <div class="title smallcont text-right">
+            <h1>Inspiration</h1>
+          </div>
+          <hr style="border-color:white;">
+          <div class="content">
+            <p>
+              I was inspired to create this project from Code Bullet. Go check out his youtube channel
+              <a href="https://www.youtube.com/channel/UC0e3QhIYukixgh5VVpKHH9Q">here</a>. He does a lot of really cool AI projects, one of which was a virtual Rubik's cube like my own. To be clear, however, I attempted this project with the intention of not using any open source / shared code. I wanted to build this from the ground up. Thus, the project was ridiculously hard. Not only the sheer amount of code I wrote, but I chose to solve the cube like a human would. I didn't use any fancy computer algorithms like Thistlethwaite's or Kociemba's algorithms to solve it (thus, my solutions are not optimized by any means), just plain old brute force hard coding magic. This was by far my biggest project, coming it at a little over 5000 lines of code (including the javascript). Although people out there have done it in much less with much less spaghetti code, I found that my hard coded baby is worth every shredded tear I put into it.
+            </p>
+          </div>
+        </div>
+      </div>
+      <!--body-->
+      <div class="medium text-white" style="background:#808080">
+        <div class="smallcont container">
+          <div class="title smallcont">
+            <h1>Data Structure of a Cube</h1>
+          </div>
+          <hr style="border-color:white;">
+          <div class="content">
+            <img src="{% static 'images/programming/cubeRepresentation.png' %}" style="width:100%;padding:30px;border-radius:40px;">
+
+            <p>
+              What the heck is a cube? To a mathematician, it is a group with its own set of permutations, inverses, combinatorics etc. To a computer scientist, it's whatever they want it to be, just as long as when I move a face, the cube can still be represented the same way. I say this because you can really represent data however you want. Sometimes, a representation in one way is more practical, but one that is less practical may be faster. I chose to represent my cube in a single list of numbers (faces in Cube.java). If you print faces in your terminal, it just prints a Java ArrayList Object. There really is no benefit to doing this. In fact, this is pretty much what the computer does to a 2D or 3D array. However, when you run printCube() or printCubeNums(), it magnificently organizes the numbers into a nice little diagram of an unfolded cube. This was what all of the numbers represented. So, my methods called rotateSide, rotateFrontFace, and rotateLayer merely take in a list of numbers and organizes it in a valid way. This actually leads to some really fun math. When you rotate a face (remember, just a list of numbers), you're essentially taking the transverse of the matrix representing the face and flipping it horizontally. When you do operations of an 1 x n * n matrix as if it was a n x n matrix, all you do is add an index that increments whenever the absolute index passes a multiple of the cube's dimension (n). To turn a side, you're swapping indexes at specified places.
+
+            </p>
+            <img src="{% static 'images/programming/solving10x10.png' %}" class="" style="width:100%;padding:30px;border-radius:40px;"/>
+
+            <p>
+              Once the basic translations were built into the code, I really never had to look back on my clumsy data structure. Just as long as the five translation methods worked on a cube, the solving logic works as well. My solving methods were quite hard coded. There are definitely a lot of if statements and switch statements, but all I really care about is that it gets the job done. I have yet to have found a scramble that hasn't stumped the code (even if it did, I have some clever little breaks in my code that say that if it is not solved at a certain point, call it a scrambled cube at whatever state it's at and start the solve over, so I can confidently say that the output will always return a valid algorithm).
+            </p>
+            <h4>The Structure of the Code</h4>
+            <img src="{% static 'images/programming/console.png' %}" style="width:100%;padding:30px;border-radius:40px;">
+
+            <p>
+              There are definitely better ways of organizing classes and objects, however, I took an object oriented approach. Each cube starts out as an nxn cube (if it notices that dimension == 3, it just skips this next step). The cube is then reduced, and it is called into a 3x3 Cube. The 3x3 cube is then solved. All the while, both 3x3 and nxn extend the Cube class. There are also edge piece objects and corner piece objects. These are mostly used in the nxn cube methods, each piece has an inplace value, so if solve an edge, I know I can't disturb that edge later on. A lot of methods will find an unsolved edge piece or center face to use as a placeholder. Then there is the Move class. This was a complete train wreck. A move main can either by x, y, z, XX, YY, or ZZ, where, attatched to x y and z is either + or -. Why I didn't dedicate a boolean to direction, I have no idea. x represents the rotateLayer method, y represents rotateSide and z represents rotateFrontFace. Each move also has a slice, from 0 to dimension - 1. So if I call x+ 1, it means rotate the 2nd (1st index) layer. But wait! The slice attatched to XX YY and ZZ actually represents direction! So, really a move is whatever it wants to be. I really could have changed this any time, but I was so far into the program to care. These are all mistakes I feel like as a beginner computer science student, I could have easily avoided. Finally, the solver class interacts with the javascript. It generates a scramble algorithm and it has it's own method that produces a solve algorithm given a scramble. So my cubes where actually defined by their scrambles and solves. Solver also has a convinient method that prints a list of cubes of dimensions that I can redirect into a javascript plain text document using the linux terminal. Solver is pretty easy to configure and instructions are found on the github page.
+            </p>
+
+            <div class="container smallcont">
+              <div class="smallcont text-right">
+                <h4>Javascript</h4>
+
+              </div>
+
+              <div>
+                <p>
+                  It is generally agreed that if you can solve a 3x3 and a 4x4, you can solve any size Rubik's cube. When solving a large dimensional Rubik's cube, cubers will go through a process called reduction (reduceCubeto3x3 in the code). This essentially turns a large cube into a 3 x 3 cube by aligning all the edges and solving all the centers. You can see the app doing this. It first solves the center of the cube, then solves the edge pieces. This is a fairly intuitive step. And by "fairly intuitive", I mean holy crap how the hell do you do this on a computer. See, we sometimes take for granted how easy it is for us to think "intuitively" (by intuitive, I mean without the need for algorithms, just eyeballing it). So when we code the rules for an "intuitive" step, these are often the hardest to code. A computer will run algorithms day and night. Once the centers are solved, we then transition to the edges. In any odd dimensional cube, all we need to remember is that every edge piece must go back to where it came, so the order of each edge piece stays the same (unlike the centerpiece, where each centerpiece has a maximum of 4 possible places that it can fit in). So, for odd dimensional cubes, we know that no matter what, as long as the all the cubes align correctly, we can move on. However, for even dimensional cubes, there is a 50% chance we'll run into OLL parity. This means we made an edge backwards (there are a bunch of parity laws that makes this impossible on odd dimensional cubes). Thus, an even dimensional cube can often be a pain in the neck because we can really not know that we hit OLL parity until the final steps of the solving process. So OLL is solved in the 3x3 phase (cube3x3 in the code). Once the cube is reduced to a 3x3, the java code actually creates a new 3x3 cube with the same cube orientation as the n x n cube. The code goes layer by layer. To solve the first layer, it finds all the corresponding edge pieces and moves them onto the first layer. On this stage, we don't need to worry about messing up the bottom two layers. In general, a law of Rubik's cubing is don't mess up stuff that you already did. So the first step is usually the easiest. Then we orient the corners, officially solving the first layer. When it comes to the center layer, there are two main algorithms we use to insert cubies into the middle layer (for those of you into speed cubing, you'll notice I took the really really long way, mostly because I wanted to challenge myself). Finally, solving the last layer is often the hardest because we really have no where to store the cubes we want to move. So we use a few algorithms and WHAMMY, the cube is solved. Again, if you want to look at the code more carefully, check out the github.
+
+                </p>
+                <div class="container text-center">
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <img src="{% static 'images/programming/solvedCenters.png' %}" style="width:100%;padding:10px;border-radius:40px;">
+
+                    </div>
+                    <div class="col-sm-4">
+                      <img src="{% static 'images/programming/cubeedegessolved.png' %}" style="width:100%;padding:10px;border-radius:40px;">
+
+                    </div>
+                    <div class="col-sm-4">
+                      <img src="{% static 'images/programming/solvedCube.png' %}" style="width:100%;padding:10px;border-radius:40px;">
+
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="container smallcont">
+              <div class="smallcont text-center">
+                <h4>TheeJS and the App</h4>
+              </div>
+              <div class="content">
+
+                <h3>
+                  Server vs Client Side Logic</h3>
+                <p>
+                  The web app linked to my website is
+                  <i>
+                    <b>not</b>
+                  </i>
+                  my project by any means. The web app is a combination of threejs and webGL, both of which are javascript libraries for 3D graphics. This code does not solve the cube either. Often, you'll find when building webapps, the only logic you are allowed to use is javascript or python if you're using Django, and there's no way to use server side logic (minus extracting data) because that would make it really easy to access the contents of the server running your website (which is pretty bad). Otherwise, my java code would have had to be made into a java applet and who in 2019 uses java applets any more? Thus, the app you see here takes in a cube object in javascript that already contains the scramble and solve algorithm. It is a complete let down. However, to show you how easy it is to update the scramble, when I run
+                  <code class="text-center text-white">java Solver > algorithm.js</code>, it creates a new javascript object. The java code generates a truly random scramble algorithm and corresponding solving algorithm. (you can see how this works in Solver.java on my github, it's mostly hard coded, there are libraries, but I didn't realize until later). Another approach could use a database to store my long algorithms (for a sense, a 100 x 100 Rubik's cube txt file is about 3.4 MB of just strings), however, I felt like being able to update the object myself more conveniently.
+                </p>
+                <h3>The Javascript Code</h3>
+                <p>
+                  I really hate 3D graphics. If you skim through my javascript code, it is very messy. This is mostly because I've never actually dabbled in 3D graphics so I was coming from the perspective of just doing the bare minimum. To code the cube, I use only small squares as the faces (this comes in handy for very large cubes, which I hope to optimize in the future). The code only has state variables and methods for rotating faces, it has no logic in actually solving the cube. Like I said, I stored that all as a javascript object.
+                </p>
+
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="medium text-white blogcontent" style="background:#383838">
+
+      <div class="container smallcont">
+        <div class="smallcont">
+          <h4>Future</h4>
+        </div>
+
+        <div class="content">
+          <p>
+            I really don't know what the future holds for this project. There are so many things I can do, however, truthfully, I am a bit done with Rubik's cubes for the time being. In my solver class, you may notice I have a move filter method. This filters the redundant moves (for example rotating the cube clockwise then counter clockwise immediately after). However, this filtering method just scratches the surface of how you can reduce an algorithm. Truthfully, studying the cube from a mathematician's point of view would open so many more doors for what I can implement. As mentioned in my intro, there are computer friendly methods like Thistlethwaite's or Kociemba's algorithms. These are not necessarily more efficient, but they utilize group theory to show that a cube can be solved with a combination of set moves. Generally, anything algorithm heavy is very nice for a computer. There are also just faster ways to solve the cube in general. The method I used was the beginner's method, the method I was most confident about. I really don't know what I will do with this project, but for now, I'm over Rubik's cubes for a while.
+          </p>
+
+        </div>
+      </div>
+    </div>
+    <div class="container medium" style="padding-bottom:0px;">
+
+      <a class="buttoncontainer" href="https://github.com/tlincke125/rubiksCube">
+        <button href="#" class="btn btn-info" type="button" style="font-size:40px;padding:30px;">GitHub Code</button>
+      </a>
+    </div>
+{% endblock %}

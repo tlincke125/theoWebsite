@@ -1,0 +1,172 @@
+{% extends '../../basic.html' %}
+{% load static %}
+
+{% block content %}
+<div>
+        <div class="container">
+            <div class="text-center" style="padding-top:150px;">
+                <!--not a container div because bg-img in css takes care of padding-->
+                <div class="container">
+                    <h1 class="text-blackwhitebckng"><a href="#blogcontent">Hacking into a Roomba Part II</a></h1>
+                </div>
+            </div>
+            <div class="container medium">
+                <img src="{% static 'images/electronics/robot.png' %}" style="width:50%;" class="img-fluid rounded mx-auto d-block" />
+            </div>
+
+            <div class="text-center container">
+                <h5 class="font-italic">Autonomous Roomba Part II</h5>
+            </div>
+        </div>
+    </div>
+
+    <!--content-->
+    <div class="blogcontent" id="blogcontent">
+        <div class="large" style="padding-bottom:0px;">
+            <div class="text-white medium" style="background-color:#313131;">
+                <div class="container medium">
+                    <div class="title smallcont container text-right">
+
+                        <h1>Introduction</h1>
+
+                    </div>
+                    <div class="text-left container">
+
+                        <p>
+                            <img src="{% static 'images/electronics/phasecuteamimage.jpg' %}" class=" float-left container"
+                                style="width:300px; " />
+
+                            If you haven’t read about the first hackathon project (link is right <a href="/posts/electronics/1/">here</a>),
+                            go check that out. This is a continuation of that project, where we built the UI and set up
+                            a web app for working with the roomba from any location.
+                            A continuation of our first hackathon project, this time, our team worked on a user
+                            interface for easy access to the roomba’s control system. With any personal home robot, the
+                            control system should be as intuitive as possible. Previously, the roomba we built was run
+                            solely on the command line of the operating system on top of the robot. This makes it very
+                            inconvenient for anybody to use because they have to manually set the robot before letting
+                            it loose. This time, we created a very basic webapp that had manual controls and a
+                            livestream of the robot’s path. This app was being run on a local server, so it was
+                            completely accessible to wifi. Thus, the user would be able to travel outside of their
+                            house and still have full control of their robot (as well as being able to scan the house
+                            remotely). There are so many uses for this, however, our main ideas included the
+                            implementation of a scanning service for children or the elderly, so parents or adults can
+                            keep an eye on their children or parents and make sure they are safe in their house. We
+                            were able to send audio over wifi, so the user could be able to record themselves and send
+                            an audible message to the roomba. However, we did not have enough time to implement this in
+                            our web app partly due to the amount of processing (the computer sitting on the roomba was
+                            processing everything because we weren't using a commercial processing server like firebase
+                            or Azure, so everything done on the website was being done on the computer).
+
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="text-white medium" style="background-color:#808080;">
+                <div class="container medium">
+                    <div class="title smallcont text-right">
+                        <h1>Cloud Control</h1>
+                    </div>
+                    <hr style="border-color:white;">
+                    <div class="text-left">
+                        <p>
+                            Check out the webapp we built <a href="controlsystem.html">here</a>. This app is only
+                            static because the roomba is not connected to a server, so the buttons will have no
+                            response.
+
+                        </p>
+                        <div class="container">
+
+                            <img src="{% static 'images/electronics/ngrokterminal.png' %}" class="float-right container" style="width:300px;border-radius:20px;padding-top:10px;padding-bottom:0px;" />
+                        </div>
+                        <p>
+                            The roomba we used was not connected to the cloud in any way. To get it connected, we had
+                            to set up a local server on our machine running the roomba so that we could send HTTP POST
+                            requests from our webapp to the roomba. We used ngrok to tunnel our local host ports to the
+                            public, creating a temporary server. This server was only in charge of hosting the site.
+                            Our laptop was the processing unit. We could have dedicated all of our server side logic to
+                            a seperate server like firebase or Azure, however, the problem was the code needed USB
+                            serial data from the machine hooked up to the roomba. This has an easy fix, just allow
+                            azure or firebase access to our USB data, but we couldn’t figure out how to do this in time
+                            (this was another last minute project that didn’t work until 10 minutes before we were
+                            about to present).
+
+                        </p>
+                        <div class="container">
+
+                            <img src="{% static 'images/electronics/flask.png' %}" class="float-right container" style="width:300px;border-radius:20px;padding-top:10px;padding-bottom:0px;" />
+                        </div>
+                        <div class="container">
+                            <p>
+                                To run the web app, we used Flask, a microframework using python (flask is like
+                                reactjs, but for python). It would have been easier to use a javascript based
+                                framework, however, all of our original code was in python, so we thought it was easier
+                                to stay consistent. We set up a virtual environment in python so that we could dedicate
+                                all of our packages to the project. For this project we used the packages flask, opencv
+                                and at the end, we used twilio (a messaging api), to send a text message to our phone
+                                when there was perceived motion in the house. Unfortunately, running a livestream, a
+                                webapp and opening a webhook through twilio was just too much for our local machine on
+                                the roomba so we did not implement the texting class.
+
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-white" style="background-color:#313131;">
+                <div class="container medium">
+                    <div class="title smallcont container text-right">
+                        <h1>Future Versions</h1>
+                    </div>
+                    <hr style="border-color:white;">
+
+                    <div class="text-left medium container">
+                        <img src="{% static 'images/electronics/GUI.png' %}" class="float-right container" style="width:300px;border-radius:20px;padding-top:10px;padding-bottom:0px;" />
+
+                        <p>
+                            An efficient household robot should have multiple functionalities. The functionality we
+                            coded for in our project was only manual control, however we wanted to set up an area on
+                            the website that would launch the robot into an autonomous roaming mode. Thus, we would
+                            have two large buttons on the web app that would tell the roomba to start executing it’s
+                            image following algorithm as well as a button that would launch the roomba into it’s idling
+                            state (the actual vacuuming protocol pre programmed on the bot). We could include more
+                            functionalities, however these were the two we had access to. We weren’t able to get these
+                            working only due to time, however, the project structure keeps this in mind and imports our
+                            original code. To make the code more efficient, it would be helpful to make the robot a
+                            class with an id that corresponded to the user’s account id, a state variable (roaming,
+                            following, manual control), a set of methods (roam, image following etc.) and some other
+                            properties. If the robot were object oriented, it would be easier to create a user profile
+                            / account that could control it using pre built methods in the class. This way, an account
+                            would be an object that had a robot as well as all the security properties that a user
+                            account should have. Again, there wasn’t enough time to implement all of this, so instead,
+                            the website was open to anybody, leaving the robot easy to control from any wifi connected
+                            machine.
+
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="container medium">
+
+                <a class="buttoncontainer" href="https://github.com/tlincke125/AutonomousLuggageSystem-2018-Phase-Hack-CU.git">
+                    <button href="#" class="btn btn-info" type="button" style="font-size:40px;padding:30px;">GitHub
+                        Code</button>
+                </a>
+            </div>
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+
+
+{% endblock %}

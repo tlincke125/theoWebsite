@@ -1,0 +1,318 @@
+{% extends '../../basic.html' %}
+{% load static %}
+
+
+{% block content %}
+
+
+
+<div>
+        <div class="container">
+            <div class="text-center" style="padding-top:150px;">
+                <!--not a container div because bg-img in css takes care of padding-->
+                <div class="container">
+                    <h1 class="text-blackwhitebckng"><a href="#blogcontent">A Cloud Based Security Camera</a></h1>
+                </div>
+            </div>
+            <div class="container medium">
+                <img src="{% static 'images/electronics/GUI.png' %}" style="width:50%;" class="img-fluid rounded mx-auto d-block" />
+            </div>
+
+            <div class="text-center container">
+                <h5 class="font-italic">Freshman Projects 2018 CU Boulder</h5>
+            </div>
+        </div>
+    </div>
+
+    <!--content-->
+    <div class="blogcontent" id="blogcontent">
+        <div class="large" style="padding-bottom:0px;">
+            <div class="text-black medium" style="background-color:#00ccff;">
+                <div class="container medium">
+                    <div class="title smallcont container text-right">
+
+                        <h1>Introduction</h1>
+
+                    </div>
+                    <div class="text-left container">
+
+                        <p>
+                            <img src="{% static 'images/electronics/texting.png' %}" class=" float-left container" style="border-radius:30px;width:300px; " />
+
+                            Imagine you’re having a conversation with someone in your home over text. They send you a
+                            text alerting you that they think someone is breaking into your house. They might ask you
+                            what to do, should they call the police, should they lock certain doors? They have an
+                            intelligent conversation with you and all the while they never send a private piece of data
+                            over text. They only send notifications. You completely trust them and they trust what you
+                            tell them and there is no room for miscommunication, and you are in full control of the
+                            security of your home remotely. This is what we pictured for our intelligent security
+                            system: a gateway into our home without the risk of oversharing over the network.
+
+
+                        </p>
+                        <p>
+                            Today, hackers can easily access private data that is stored securely in the cloud.
+                            Companies do partake in measures to combat this, updating and fixing security bugs in their
+                            software, however the general public often doesn’t keep up with these upgrades. Anything
+                            from smartphones to cameras to literally anything connected to the internet must constantly
+                            be upgraded and the average user just doesn’t have time for this given the ubiquity of
+                            internet connected devices.
+                        </p>
+
+                        <p>
+                            This project was not only a security camera, it was the tunnel into a world where we stop
+                            sending private information through the internet. This project explored the idea of
+                            implementing machine learning into the internet of things.
+
+                        </p>
+                        <p>
+                            For this project, I worked in a group of two engineers, Maxwell Pettit and Noah Saidy, to
+                            construct a completely cloud based machine learning based security camera that would store
+                            private information externally (not transfer private data over wifi) and send non private
+                            data back to the user in the form of a “conversation” with an intelligent home client.
+                            (Note that in
+                            the picture to the left, I am using a Twilio trial account, this is only because we used
+                            this account as a proof of concept, at commercial level, the twilio client would be
+                            official)
+                        </p>
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="text-white medium" style="background-color:#3366ff;">
+                <div class="container medium">
+                    <div class="title smallcont text-right">
+                        <h1>The Camera</h1>
+                    </div>
+                    <hr style="border-color:white;">
+                    <div class="text-left container">
+                        <div class="row" style="padding-bottom: 20px;">
+                            <div class="col-lg-8">
+                                <p>
+                                    Our motion tracking security camera was built using an old household digital camera
+                                    that we
+                                    broke into and soldered wires to the picture button. The camera was placed atop a
+                                    servo
+                                    motor which was controlled using the Arduino ATMega based microcontroller. This
+                                    controller
+                                    also received a digital input from each of the PIR motion sensors indicating
+                                    whether there
+                                    is or is not motion in front of them. The base level code that controlled the
+                                    camera
+                                    assigned a certain voltage to each PIR sensor.
+
+                                </p>
+                                <p>
+                                    If one of the sensors were activated, the
+                                    camera would ideally turn to match the position of the pir sensor. The
+                                    corresponding
+                                    voltage is the voltage needed to align the servo to the sensor. The program went
+                                    through
+                                    and if a PIR sensor was activated, it would add the assigned voltage to a overall
+                                    sum, then
+                                    find the average of all the activated motion sensor readings to output to the
+                                    servo. Thus,
+                                    if two PIR motion sensors were activated, the servo would move in between the two.
+                                    We ran
+                                    into problems when we realized each of the motion sensors have what’s called a lock
+                                    low
+                                    time, or an amount of time it takes for an activated motion sensor to go back to
+                                    zero after
+                                    all motion would stop. Initially this was about 15 seconds but with some
+                                    configuration, we
+                                    were able to drop this down to about 3 seconds.
+
+
+                                </p>
+
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="container text-right">
+
+                                    <img src="{% static 'images/electronics/opensecuritycamera.jpg' %}" style="width:100%;padding-top:10px;" />
+                                </div>
+
+                            </div>
+
+
+
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class=" text-left">
+                                    <img src="{% static 'images/electronics/securritycamera.jpg' %}" style="width:100%;padding-top:10px;" />
+
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+
+                                <p>
+                                    Motion tracking is a somewhat complex task. Primarily due to the method one choses.
+                                    If this system
+                                    was integrated with machine learning in the future, we could use something like
+                                    openCV to track
+                                    someone moving across the camera screen. Our origional method was to implement
+                                    three motion sensors
+                                    on the entire camera system. The two on the left would detect where in the frame an
+                                    object is. If somebody
+                                    is on the right, the right motion sensor would activate. However, if this person is
+                                    on the right and is moving to the
+                                    left, the two side sensors wouldn't have enough data to tell which way to turn.
+                                    Thus, we wanted a third center sensor
+                                    that would determine the direction the person is actually moving.
+
+                                </p>
+                                <p>
+                                    This algorithm could potentially work with quick responding sensors. However, due
+                                    to our sensor's slow reaction time,
+                                    we had to implement a different techinique, one that would actually move the camera
+                                    to the coordinate point
+                                    that the triggered sensor was in. This technique is a little more pricey, as it
+                                    involves five motion sensors instead of
+                                    three. Ideally, the system would be contained to a single camera using software to
+                                    detect position, however this wasn't a
+                                    reasonable goal for our short time span. Possibly for the future, we will think
+                                    about implementing software position tracking,
+                                    however, for now, the motion sensors provided a fun challenge in code
+                                    functionality.
+                                </p>
+
+                            </div>
+
+
+
+
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+            <div class="text-black medium" style="background-color:#00ccff;">
+                <div class="container medium">
+                    <div class="title smallcont text-right">
+                        <h1>The WebApp and Flask</h1>
+                    </div>
+                    <hr style="border-color:white;">
+                    <div class="text-left">
+                        <p>
+                            Go look at the template for the web app <a href="/posts/electronics/security">here</a> to see the
+                            basic structure of the web app.
+
+
+
+
+                            We built the webapp using a combination of the micro framework Flask and the API twilio.
+                            The app had dedicated POST requests that would let the user in on vital information.
+
+                        </p>
+
+                        <div class="container text-center">
+
+                            <img src="{% static 'images/electronics/ECEN1400Functional_Block_Diagram.jpg' %}" style="width:100%;border-radius:50px;padding:40px;" />
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-5">
+                                    <p>
+                                        As seen in the image above, the control flow branched from the user interface
+                                        (this
+                                        was
+                                        all based on a web app, the twilio API used a webhook to relay information to
+                                        the
+                                        local
+                                        server and this was our webapp with a /sms/ tag at the end of the url). The
+                                        webapp
+                                        would
+                                        send an HTTP post request to a server, which would then retrieve information
+                                        from
+                                        the
+                                        local host (a raspi in the future) using a tunneling service called ngrok. We
+                                        will
+                                        be
+                                        taking this step out and feeding the usb data directly to the server in the
+                                        future,
+                                        however, we didn’t have access to a professional server that would allow
+                                        dedicated
+                                        processing outside of the local host. The local host would then send commands
+                                        over
+                                        usb
+                                        to the arduino which controlled its peripherals. The camera would store private
+                                        information in an external memory and the motion sensor would send information
+                                        back
+                                        to
+                                        the arduino which would then be sent back to the user. If the user sent the
+                                        request
+                                        over sms, this would be in the form of TwiML, an XML based command that twilio
+                                        interprets as a response. The entire system is designed to have an intelligent
+                                        conversation with the user.
+
+
+                                    </p>
+                                </div>
+                                <div class="container col-lg-7">
+
+                                    <img src="{% static 'images/electronics/ngrokterminal.png' %}" class="float-center container"
+                                        style="width:100%;border-radius:20px;padding-top:10px;padding-bottom:0px;" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-white" style="background-color: #3366ff ">
+                <div class="container medium">
+                    <div class="title smallcont container text-right">
+                        <h1>Future</h1>
+                    </div>
+                    <hr style="border-color:white;">
+
+                    <div class="text-left medium container">
+                        <img src="{% static 'images/electronics/GUI.png' %}" class="float-right container" style="width:400px;border-radius:20px;padding-top:10px;padding-bottom:0px;" />
+
+                        <p>
+                            The project is only at its infancy. We have not yet implemented a smart conversation client
+                            like google’s Dialog Flow. The idea for the project is to implement an “Alexa” or “Siri”
+                            like nature to the system. So a user can have a friendly conversation with their
+                            conversation client and control the security of their home. More sensors would need to be
+                            implemented in the house such as break beam sensors at the doorway or a machine learning
+                            camera that recognized suspicious activity (so that a user wouldn't get a notification
+                            everytime their dog or neighbor crossed the motion sensors). These would not entirely be
+                            difficult
+                            to implement as the internet of things is becomming much more ubiquitous. A "smart" home
+                            security system should make the user feel like they have full control of their home even
+                            when the
+                            user doesn't have a direct camera feed.
+
+
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="container medium">
+
+                <a class="buttoncontainer" href="https://github.com/tlincke125/ECEN1400">
+                    <button href="#" class="btn btn-info" type="button" style="font-size:40px;padding:30px;">GitHub
+                        Code</button>
+                </a>
+                <p class="text-center">This was also a project that I delved deep into the world of git. Unlike some of
+                    my other projects,
+                    I've followed some basic git guidelines. I've included a python virtual environment (with all
+                    packages installed) as well as README's in every directory.
+                </p>
+            </div>
+
+
+
+
+        </div>
+
+
+
+    </div>
+
+{% endblock %}
