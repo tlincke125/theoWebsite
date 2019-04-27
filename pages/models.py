@@ -40,3 +40,6 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.name + ":" + self.category + ":" + self.idVal
+
+#class Email(models.Model):
+

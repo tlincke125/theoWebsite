@@ -1,0 +1,247 @@
+{% extends '../../basic.html' %}
+{% load static %}
+
+{% block content %}
+<div>
+        <div class="container">
+            <div class="text-center" style="padding-top:150px;">
+                <!--not a container div because bg-img in css takes care of padding-->
+                <div class="container">
+                    <h1 class="text-black "><a href="#mathematicsprojs">A Mathematical approach to Machine Learning</a></h1>
+                </div>
+            </div>
+            <div class="container">
+                <img src="{% static 'images/mathematics/fern.png' %}" class="img-fluid rounded mx-auto d-block" />
+            </div>
+
+            <div class="text-center container">
+                <h5 class="font-italic">A Highly Efficient Machine Learning Approach Using Linear Least Squares with Vector Inputs</h5>
+            </div>
+        </div>
+    </div>
+
+    <!--content-->
+    <div class="blogcontent">
+        <div class="large" style="padding-bottom:0px;">
+            <div class="text-white" style="background-color:#313131;">
+                <div class="container medium">
+                    <div class="title smallcont container text-right">
+                        <h1>Introduction</h1>
+                    </div>
+                    <hr style="border-color:white;">
+                    <div class="text-left container">
+                        <p>
+                            Machine Learning has primarily been dominated by large complex black boxes that are not visible or understood by the opperators
+                            in charge of them. Delving 
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="text-white medium" style="background-color:#808080;">
+                <div class="container">
+                    <div class="title smallcont text-right">
+                        <h1>The Algorithm</h1>
+                    </div>
+                    <hr style="border-color:white;">
+                    <div class="text-left">
+                        <p>
+                            To better understand this algorithm, refer to the black canvas below. The instructions are
+                            very simple. Pick three
+                            random points on the canvas to form a triangle. These will be our "anchor" points. For now,
+                            keep the increment number
+                            at one to understand the algorithm. Proceed by clicking on the canvas. There will be random
+                            dots being placed in seemingly random
+                            places. The way these dots are being placed is by the halving algorithm. Each time you
+                            click, the algorithm chooses two points,
+                            one of which is a random anchor point (from the original three points). The other is the
+                            current state point. The first time you
+                            click, this current position is another random anchor point, however, each other iteration
+                            is the dot that was just placed.
+                        </p>
+                        <p>
+                            The algorithm then proceeds to place another point (that will be our next current point)
+                            halfway between the current point and
+                            the random anchor point. You can keep placing dots on the canvas, however, if we increase
+                            the increment count by entering a valid number
+                            in the input form, we can speed this process up. (The only difference is the program does
+                            the halving algorithm n times where n
+                            is the increment number.) Go ahead an enter a new number. I encourage you to work your way
+                            up, so start at 1, then go to 100, then 500, then
+                            1000. From there the pattern seems very clear. It begins to form a very recognizable
+                            triangle.
+                        </p>
+                        <p>
+                            The program is relatively instantaneous up to about 10000. 100000 takes about 3 seconds and
+                            1000000 takes about 15 seconds to compute.
+                            To reset, just click the go button after you have entered a valid number.
+                        </p>
+                    </div>
+                </div>
+                <div class="container text-center smallcont" id="canvas-div">
+
+
+
+                </div>
+
+                <div class="container text-center">
+                    <form id="number incrementform">
+                        <div class="row">
+                            <div class="col-md-4">
+
+                            </div>
+                            <div class="col-md-3" style="width:100%;">
+                                <input id="increment" type="number" name="increment" width="2" class="form-control"
+                                    placeholder="Increment" required="required">
+                            </div>
+                            <div class="col-md-1">
+                                <button id="reset" class="btn btn-info my-2 my-sm-0" type="button">Go</button>
+                            </div>
+                            <div class="col-md-4">
+
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+                <div class="container smallcont text-left">
+
+
+                    <p>
+                        This algorithm is a geometric, or recursive one. Every point is dependent on the point before
+                        it. There would be no way to place these dots
+                        non-sequentially like we could with an algebraic formula. Instead, we must place each dot one
+                        by one, one after the other.
+                    </p>
+
+
+                </div>
+            </div>
+            <div class="medium" style="background-color:white;">
+                <div class="container">
+                    <div class="title smallcont text-right">
+                        <h1>Other Algorithms</h1>
+                    </div>
+                    <hr style="border-color:black;">
+                    <div class="text-left">
+                        <p>
+                            This method of placing dots in places according to previous positions and probability is a
+                            very common way to make
+                            interesting fractals. With enough time and excitement for fractals, a math student may find
+                            themselves inventing other
+                            rules based on probability and chance. However, here are some more fun patterns.
+                        </p>
+                        <div class="smallcont">
+                            <h3>Barnsley's Fern</h3>
+                            <p>
+                                Another very fascinating pattern exists by using the rules of matrices and
+                                transformations. Barnsley's fern is
+                                a pattern found when you do one of four things with each iteration. You have an x
+                                coordinate and a y coordinate
+                                and every iteration, you change your x, y coordinate pair by one of the four following
+                                transformations. (The formulas
+                                are courtesy of wikipedia).
+                            </p>
+                            <div class="text-center">
+                                <img src="{% static 'images/mathematics/barnsleymatrices.jpg' %}" style="width:300px;" />
+                            </div>
+                            <p>
+                                F1 is undergone with a 1% chance, f2 with an 85% chance, f3 with a 7% chance and f4
+                                with a 7% chance. To form barnsley's
+                                fern, the coordinate pair (x, y) starts at the position (0, 0). Each iteration, you
+                                undergo one of these translations
+                                based on their respective probabilities and place a point at the resulting (x, y)
+                                coordinate pair. I've written a quick
+                                program in python that iterates through this process (you can find that on the linked
+                                github page) 10000 times and I
+                                received the following image in my coordinate plane.
+                            </p>
+                            <div class="text-center">
+                                <img src="{% static 'images/mathematics/fern.png' %}" style="width:300px;" />
+                            </div>
+                            <p>
+                                Using this algorithm is very useful as you may have seen as it can be used in video
+                                games to create a variety of
+                                different leaf patterns (by changing the transforming matrices slightly) so that the
+                                game has a more natural feel.
+                            </p>
+                        </div>
+                        <div class="smallcont">
+                            <h3>Lorenz Attractor</h3>
+                            <p>
+                                A more advanced fractal, the Lorenz Attractor, is formed by using a system of linearly
+                                homogeneous ordinary differential
+                                equations like the ones below.
+                            </p>
+                            <div class="text-center">
+                                <img src="{% static 'images/mathematics/lorenzeq.jpg' %}" style="width:300px;" />
+                            </div>
+                            <p>
+                                I won't go into much detail on how the system works. Essentially, The equations
+                                describe a fluid that is heated from underneath
+                                and cooled from above. x is the rate of convection (so the derivative of x is the
+                                second derivative of convection), y is the
+                                horizontal temperature difference and z is the vertical temperature difference. Sigma
+                                rho and beta are physical constants that describe
+                                the Prandtl number, Rayleigh number and some other physical constants. By graphing
+                                these three differential equations on a three dimensional
+                                axis, we get the following figure.
+                            </p>
+                            <div class="text-center">
+                                <img src="{% static 'images/mathematics/lorenzwithaxis.jpeg' %}" style="width:300px;" />
+                            </div>
+                            <p>
+                                Those of you in a differential equations class will recognize this right away as a
+                                damped system of differential equations
+                                and you will realize that this can really describe any physical process that involves
+                                the rate of change of a three body
+                                system like a brushless dc motor, chemical equation, or electrical circuit. These are
+                                some examples and generally, the Lorenz
+                                attractor can describe many very interesting fundamental processes.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="text-white" style="background-color:#313131;">
+                    <div class="container medium">
+                        <div class="title smallcont container text-right">
+                            <h1>Conclusion</h1>
+                        </div>
+                        <hr style="border-color:white;">
+                        <img class="float-left" src="{% static 'images/mathematics/fractalgeneral.jpg' %}" style="width:400px;padding-right:50px;" />
+                        <div class="text-left medium container">
+
+                            <p>
+                                As a mathematician, fractals have always intrigued me. Although they often have very
+                                simple rules, you can create many extremely intricate and detailed patterns which makes
+                                them
+                                almost artistic. They are so easy to create as well. Give it a little bit of time and a
+                                knowledge
+                                of recursion and anybody can make any arbitrary rules that turn into something complex
+                                and intricate.
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container smallcont">
+
+                <a class="buttoncontainer" href="https://github.com/tlincke125/pascalstrianglepostwebsite.git">
+                    <button href="#" class="btn btn-info" type="button" style="font-size:40px;padding:30px;">GitHub
+                        Code</button>
+                </a>
+            </div>
+
+        </div>
+
+
+
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.js"></script>
+
+    <script src="{% static 'js/math/attractor.js' %}"></script>
+
+{% endblock content %}
