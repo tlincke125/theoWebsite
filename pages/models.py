@@ -3,7 +3,7 @@ from django.db import models
 from datetime import date
 # Create your models here.
 
-
+#
 class Post(models.Model):
     #For the future, use auto_now_add=True - makes a single instance of date on creation
     #default=date.today is the same, but defaults to the creating day
