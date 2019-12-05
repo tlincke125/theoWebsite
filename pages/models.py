@@ -42,4 +42,3 @@ class Comment(models.Model):
         return self.name + ":" + self.category + ":" + self.idVal
 
 #class Email(models.Model):
-
